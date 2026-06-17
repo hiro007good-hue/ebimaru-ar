@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>クーポン交換</title>
+
+<style>
+
+body{
+    text-align:center;
+    font-family:sans-serif;
+    background:#fff8f0;
+}
+
+.card{
+    width:300px;
+    margin:20px auto;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px #ccc;
+}
+
+button{
+    padding:10px 20px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>🎁 クーポン交換所</h1>
+
+<div class="card">
+
+海老フライ1本無料
+
+<br><br>
+
+必要ポイント
+
+500
+
+<br><br>
+
+<button onclick="exchangeCoupon()">
+
+交換する
+
+</button>
+
+</div>
+
+<div id="result"></div>
+
+<script>
+
+function exchangeCoupon(){
+
+    let point =
+    Number(localStorage.getItem("point")) || 0;
+
+    if(point >= 500){
+
+        point -= 500;
+
+        localStorage.setItem("point", point);
+
+        alert("交換後ポイント：" + point);
+
+        document.getElementById("result").innerHTML =
+        "交換成功！<br>残りポイント：" + point;
+
+    }else{
+
+        document.getElementById("result").innerHTML =
+        "ポイント不足です";
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>

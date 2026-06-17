@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>海老図鑑</title>
+
+<style>
+body{
+ text-align:center;
+ font-family:sans-serif;
+ background:#fff8f0;
+}
+
+.card{
+ margin:20px auto;
+ width:300px;
+ background:white;
+ padding:15px;
+ border-radius:10px;
+ box-shadow:0 0 10px #ccc;
+}
+</style>
+
+</head>
+<body>
+
+<h1>📖 海老図鑑</h1>
+
+<div class="card" id="ebimaru-card">
+🦐 No.001 エビ丸
+<br>
+状態：未発見
+</div>
+
+<div class="card">
+🌸 No.002 花咲きえび
+</div>
+
+<div class="card">
+⚔️ No.003 武将えび
+</div>
+
+<a href="index.html">トップへ戻る</a>
+<script>
+
+if(localStorage.getItem("ebimaru") === "captured"){
+
+    document.getElementById("ebimaru-card").innerHTML = `
+    🦐 No.001 エビ丸
+    <br>
+    状態：獲得済み
+    `;
+}
+
+</script>
+</body>
+</html>
+index.html の修正
+
+「海老図鑑」ボタンを探して、
+
+現在
+
+<button>海老図鑑</button>
+
+になっている部分を
+
+<a href="zukan.html">
+<button>海老図鑑</button>
+</a>

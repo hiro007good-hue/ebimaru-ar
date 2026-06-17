@@ -1,0 +1,64 @@
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>海老を発見！</title>
+
+<style>
+body{
+    text-align:center;
+    font-family:sans-serif;
+    background:#fff8f0;
+}
+
+button{
+    padding:15px 30px;
+    font-size:20px;
+    border:none;
+    border-radius:10px;
+}
+
+#result{
+    font-size:24px;
+    color:red;
+    margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🦐 えびまる発見！</h1>
+
+<img src="images/ebimaru.png" width="200">
+
+<br><br>
+
+<button onclick="captureEbi()">
+捕まえる！
+</button>
+
+<div id="result"></div>
+
+<script>
+
+let point =
+Number(localStorage.getItem("point")) || 0;
+
+function captureEbi(){
+
+    alert("エビ丸が仲間になった！");
+
+    point = point + 100;
+
+    localStorage.setItem("point", point);
+
+    localStorage.setItem("ebimaru", "captured");
+
+    document.getElementById("result").innerHTML =
+    "エビ丸獲得！<br>現在ポイント：" + point;
+}
+
+</script>
+
+</body>
+</html>

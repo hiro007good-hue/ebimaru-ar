@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GPSテスト</title>
+
+<style>
+
+body{
+    font-family:sans-serif;
+    text-align:center;
+    background:#fff8f0;
+    padding:20px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    max-width:500px;
+    margin:auto;
+    box-shadow:0 0 10px #ccc;
+}
+
+button{
+    padding:15px 30px;
+    font-size:18px;
+}
+
+</style>
+
+</head>
+<body>
+
+<h1>📍 GPSテスト</h1>
+
+<div class="card">
+
+<p id="status">
+位置情報を取得してください
+</p>
+
+<button onclick="getLocation()">
+現在地を取得
+</button>
+
+</div>
+
+<script>
+
+function getLocation(){
+
+    if(navigator.geolocation){
+
+        navigator.geolocation.getCurrentPosition(
+
+            function(position){
+
+                let lat = position.coords.latitude;
+                let lng = position.coords.longitude;
+
+                document.getElementById("status").innerHTML =
+                "緯度：" + lat +
+                "<br>経度：" + lng;
+
+            },
+
+            function(error){
+
+                document.getElementById("status").innerHTML =
+                "位置情報が取得できません";
+
+            }
+
+        );
+
+    }else{
+
+        document.getElementById("status").innerHTML =
+        "GPS非対応です";
+
+    }
+
+}
+
+</script>
+
+</body>
+</html>
