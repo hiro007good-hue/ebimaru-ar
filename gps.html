@@ -28,6 +28,12 @@ button{
     font-size:18px;
 }
 
+<br><br>
+
+<button onclick="resetGoldenEbi()">
+テストリセット
+</button>
+
 </style>
 
 </head>
@@ -41,6 +47,8 @@ button{
 位置情報を取得してください
 </p>
 
+<div id="golden-area"></div>
+
 <button onclick="getLocation()">
 現在地を取得
 </button>
@@ -49,38 +57,104 @@ button{
 
 <script>
 
+
 function getLocation(){
 
-    if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(
 
-        navigator.geolocation.getCurrentPosition(
+        function(position){
 
-            function(position){
+            let lat = position.coords.latitude;
+            let lng = position.coords.longitude;
 
-                let lat = position.coords.latitude;
-                let lng = position.coords.longitude;
+            document.getElementById("status").innerHTML =
+            "緯度：" + lat +
+            "<br>経度：" + lng;
 
-                document.getElementById("status").innerHTML =
-                "緯度：" + lat +
-                "<br>経度：" + lng;
+            checkGoldenEbi(lat,lng);
 
-            },
+        },
 
-            function(error){
+        function(){
 
-                document.getElementById("status").innerHTML =
-                "位置情報が取得できません";
+            document.getElementById("status").innerHTML =
+            "位置情報を取得できません";
 
-            }
+        }
 
-        );
+    );
 
-    }else{
+}
 
-        document.getElementById("status").innerHTML =
-        "GPS非対応です";
+function checkGoldenEbi(lat,lng){
+
+    if(localStorage.getItem("goldenEbi") === "captured"){
+    return;
+}
+
+    const shopLat = 35.00582;
+    const shopLng = 136.28101;
+
+    let distance =
+    Math.sqrt(
+        Math.pow(lat - shopLat,2) +
+        Math.pow(lng - shopLng,2)
+    );
+
+    if(distance < 0.001){
+
+        document.getElementById("status").innerHTML +=
+        "<br><br>✨ 黄金えび発見！";
+
+        document.getElementById("golden-area").innerHTML =
+        '<button onclick="captureGoldenEbi()">黄金えびを捕獲</button>';
 
     }
+
+}
+
+function captureGoldenEbi(){
+
+    localStorage.setItem(
+        "goldenEbi",
+        "captured"
+    );
+
+    let point =
+    Number(localStorage.getItem("point")) || 0;
+
+    point += 1000;
+
+    localStorage.setItem(
+        "point",
+        point
+    );
+
+    alert(
+        "黄金えびGET！\n1000ポイント獲得！"
+    );
+
+     document.getElementById("golden-area").innerHTML =
+    "✅ 黄金えび 捕獲済み";
+
+}
+
+
+
+if(localStorage.getItem("goldenEbi") === "captured"){
+
+    document.getElementById("golden-area").innerHTML =
+    "✅ 黄金えび 捕獲済み";
+
+}
+
+function resetGoldenEbi(){
+
+    localStorage.removeItem("goldenEbi");
+
+    alert("黄金えびをリセットしました");
+
+    location.reload();
 
 }
 
