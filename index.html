@@ -136,10 +136,6 @@ onclick="talkEbi()">
 <a href="gps.html">
 <button>📍GPSテスト</button>
 </a>
-<a href="busho.html">
-<button>⚔️ 武将えび探索</button>
-</a>
-    
 </div>
 
 
@@ -208,6 +204,11 @@ if(localStorage.getItem("ebimaru") === "captured"){
 
 // 黄金えび
 if(localStorage.getItem("goldenEbi") === "captured"){
+    found++;
+}
+
+// 武将えび
+if(localStorage.getItem("bushoEbi") === "captured"){
     found++;
 }
 
