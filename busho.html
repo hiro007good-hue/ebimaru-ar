@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>武将えび</title>
+
+<style>
+
+body{
+    font-family:sans-serif;
+    text-align:center;
+    background:#fff8f0;
+    padding:20px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    max-width:500px;
+    margin:auto;
+    box-shadow:0 0 10px #ccc;
+}
+
+button{
+    padding:15px 30px;
+    font-size:18px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>⚔️ 武将えび探索</h1>
+
+<div class="card">
+
+<p id="status">
+日野城跡へ向かおう！
+</p>
+
+<div id="busho-area"></div>
+
+<button onclick="getLocation()">
+現在地を取得
+</button>
+
+</div>
+
+<script>
+
+function getLocation(){
+
+    navigator.geolocation.getCurrentPosition(
+
+        function(position){
+
+            let lat =
+            position.coords.latitude;
+
+            let lng =
+            position.coords.longitude;
+
+            document.getElementById(
+                "status"
+            ).innerHTML =
+            "緯度：" + lat +
+            "<br>経度：" + lng;
+
+            checkBusho(lat,lng);
+
+        },
+
+        function(){
+
+            document.getElementById(
+                "status"
+            ).innerHTML =
+            "位置情報を取得できません";
+
+        }
+
+    );
+
+}
+
+function checkBusho(lat,lng){
+
+    if(localStorage.getItem(
+        "bushoEbi"
+    ) === "captured"){
+
+        return;
+    }
+
+    const bushoLat = 35.0170;
+    const bushoLng = 136.2400;
+
+    let distance =
+    Math.sqrt(
+        Math.pow(
+            lat - bushoLat,2
+        ) +
+        Math.pow(
+            lng - bushoLng,2
+        )
+    );
+
+    if(distance < 0.001){
+
+        document.getElementById(
+            "status"
+        ).innerHTML +=
+        "<br><br>⚔️ 武将えび発見！";
+
+        document.getElementById(
+            "busho-area"
+        ).innerHTML =
+        '<button onclick="captureBusho()">捕獲する</button>';
+
+    }
+
+}
+
+function captureBusho(){
+
+    localStorage.setItem(
+        "bushoEbi",
+        "captured"
+    );
+
+    let point =
+    Number(
+        localStorage.getItem(
+            "point"
+        )
+    ) || 0;
+
+    point += 300;
+
+    localStorage.setItem(
+        "point",
+        point
+    );
+
+    alert(
+        "⚔️ 武将えびGET！\n300ポイント獲得！"
+    );
+
+    document.getElementById(
+        "busho-area"
+    ).innerHTML =
+    "✅ 武将えび 捕獲済み";
+
+}
+
+if(localStorage.getItem(
+    "bushoEbi"
+) === "captured"){
+
+    document.getElementById(
+        "busho-area"
+    ).innerHTML =
+    "✅ 武将えび 捕獲済み";
+
+}
+
+</script>
+
+</body>
+</html>
